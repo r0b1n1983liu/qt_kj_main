@@ -6,112 +6,227 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>541</width>
-    <height>461</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>显示指标</string>
+   <string>指标管理</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>62</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>index</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>10</y>
-     <width>62</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>index</string>
-   </property>
-  </widget>
-  <widget class="QTextBrowser" name="intro_textBrowser">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>70</y>
-     <width>311</width>
-     <height>261</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="excel_pushButton">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>390</y>
-     <width>114</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>导出为Excel</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="quit_pushButton">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>390</y>
-     <width>114</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>退出</string>
-   </property>
-  </widget>
-  <widget class="QGraphicsView" name="wdj_graphicsView">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>70</y>
-     <width>51</width>
-     <height>301</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="Line" name="line">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>70</y>
-     <width>16</width>
-     <height>301</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="progressBar">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>400</y>
-     <width>118</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="value">
-    <number>24</number>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="4" column="1" colspan="3">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="modify_pushButton">
+       <property name="text">
+        <string>修改</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/icon.png</normaloff>:/qrc/image/qrc/image/icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QPushButton" name="quit_pushButton">
+       <property name="text">
+        <string>退出</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/exit_icon.png</normaloff>:/qrc/image/qrc/image/exit_icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="import_pushButton">
+       <property name="text">
+        <string>导入Excel07</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/icon.png</normaloff>:/qrc/image/qrc/image/icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="export_pushButton">
+       <property name="text">
+        <string>导出Excel07</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/icon.png</normaloff>:/qrc/image/qrc/image/icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="delAll_pushButton">
+       <property name="text">
+        <string>全部删除</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/delete_icon.png</normaloff>:/qrc/image/qrc/image/delete_icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="3">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="search_pushButton">
+       <property name="text">
+        <string>查询</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/find.png</normaloff>:/qrc/image/qrc/image/find.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="clear_pushButton">
+       <property name="text">
+        <string>清空</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/data_icon.png</normaloff>:/qrc/image/qrc/image/data_icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="3">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="code2_lineEdit"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="code3_lineEdit"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="name_label">
+       <property name="text">
+        <string>指标名称</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="code3_label">
+       <property name="text">
+        <string>指标编号</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="name_lineEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="code2_label">
+       <property name="text">
+        <string>二级编号</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="3">
+    <widget class="QTextEdit" name="info_textEdit">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>400</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QLabel" name="info_label">
+     <property name="text">
+      <string>说明:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="4">
+    <widget class="QTreeView" name="index_treeView"/>
+   </item>
+   <item row="2" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="4">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
  </widget>
- <resources/>
+ <tabstops>
+  <tabstop>name_lineEdit</tabstop>
+  <tabstop>code3_lineEdit</tabstop>
+  <tabstop>code2_lineEdit</tabstop>
+  <tabstop>info_textEdit</tabstop>
+  <tabstop>modify_pushButton</tabstop>
+  <tabstop>quit_pushButton</tabstop>
+  <tabstop>index_treeView</tabstop>
+ </tabstops>
+ <resources>
+  <include location="kj.qrc"/>
+ </resources>
  <connections/>
 </ui>

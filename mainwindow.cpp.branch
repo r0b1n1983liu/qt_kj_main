@@ -1,0 +1,731 @@
+﻿#include "mainwindow.h"
+#include <QSqlRecord>
+#include "login.h"
+#include "dynamicarray.h"
+#include <QDataWidgetMapper>
+#include <QStandardItemModel>
+#include <QSqlQueryModel>
+#include <list>
+#include <iostream>
+#include <QFileDialog>
+#include "kjanalysis.h"
+#include <iostream>
+
+using namespace std;
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent)
+{
+    setupUi(this);
+    //modelIndex  --index2
+
+    modelIndex = new QSqlRelationalTableModel(this);
+    QString tableName2="Index2";
+    modelIndex->setTable (tableName2);
+    modelIndex->setEditStrategy (QSqlTableModel::OnManualSubmit);
+    modelIndex->select ();
+
+    //model -- data
+    model=new QSqlTableModel(this);
+    tableName="data";
+    model->setTable (tableName);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    //    this->setHeader ();
+
+    model->select ();
+    int rowC  = model->rowCount ();
+    QStringList qsl;
+    qsl.append ("全部");
+
+    for (int i = 0; i < rowC ; ++i) {
+        if(!qsl.contains (model->record (i).value ("year").toString ()))
+            qsl.append (model->record (i).value ("year").toString ());
+    }
+
+    typeModel = new QStringListModel;
+    typeModel->setStringList (qsl);
+    year_comboBox->setModel (typeModel);
+
+    model->setSort(0,Qt::AscendingOrder);
+    model->select ();
+
+
+    //X100
+    QString code ="X100";
+    modelIndex->setFilter ("");
+    modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    int columnX1 = modelIndex->rowCount ();
+    int rowX1 = model->rowCount ();
+    modelX1 = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("X100",modelX1);
+
+    //X200
+    code ="X200";
+    modelIndex->setFilter ("");
+    modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    columnX1 = modelIndex->rowCount ();
+    rowX1 = model->rowCount ();
+    modelX2 = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("X200",modelX2);
+
+    //X300
+    code ="X300";
+    modelIndex->setFilter ("");
+    modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    columnX1 = modelIndex->rowCount ();
+    rowX1 = model->rowCount ();
+    modelX3 = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("X300",modelX3);
+
+    //X400
+    code ="X400";
+    modelIndex->setFilter ("");
+    modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    columnX1 = modelIndex->rowCount ();
+    rowX1 = model->rowCount ();
+    modelX4 = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("X400",modelX4);
+
+    //X500
+    code ="X500";
+    modelIndex->setFilter ("");
+    modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    columnX1 = modelIndex->rowCount ();
+    rowX1 = model->rowCount ();
+    modelX5 = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("X500",modelX5);
+
+    //X600
+    code ="X600";
+    modelIndex->setFilter ("");
+    modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    columnX1 = modelIndex->rowCount ();
+    modelX6 = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("X600",modelX6);
+
+    //X700
+    code ="X700";
+    modelIndex->setFilter ("");
+    modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    columnX1 = modelIndex->rowCount ();
+    rowX1 = model->rowCount ();
+    modelX7 = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("X700",modelX7);
+
+    //All
+    modelIndex->setFilter ("");
+    modelIndex->select ();
+    columnX1 = modelIndex->rowCount ();
+    rowX1 = model->rowCount ();
+    modelAll = new QStandardItemModel(rowX1,columnX1+2,this);
+    STInit ("",modelAll);
+
+    modelTemp =modelAll;
+    all_tableView->setModel (modelTemp);
+
+    //    QStandardItem* item = modelAll->item (4,6);
+    //    cout << item->text ().toStdString ()<<endl;
+
+}
+
+//QSqlTableModel *model;
+//QSqlRelationalTableModel *modelIndex;
+//QSqlQueryModel *queryModel;
+//QStandardItemModel *modelST;
+//QStandardItemModel *modelX1;
+//QStandardItemModel *modelX2;
+//QStandardItemModel *modelX3;
+//QStandardItemModel *modelX4;
+//QStandardItemModel *modelX5;
+//QStandardItemModel *modelX6;
+//QStandardItemModel *modelX7;
+//QStandardItemModel *modelAll;
+
+//DynamicArray *kjAnalytics;
+//QStringListModel *typeModel;
+
+MainWindow::~MainWindow()
+{
+    delete(model);
+    delete(modelIndex);
+    //delete(queryModel);
+    delete(modelST);
+    delete(modelX1);
+    delete(modelX2);
+    delete(modelX3);
+    delete(modelX4);
+    delete(modelX5);
+    delete(modelX6);
+    delete(modelX7);
+    delete(modelAll);
+    delete(kjAnalytics);
+    delete(typeModel);
+}
+
+void MainWindow::STInit(QString code, QStandardItemModel *QStandModel)
+{
+    modelIndex->setFilter ("");
+    if(code!="")
+        modelIndex->setFilter ("code2 = '" +code +"'");
+    modelIndex->select ();
+    int columnX1 = modelIndex->rowCount ();
+    int rowX1 = model->rowCount ();
+    //QStandModel = new QStandardItemModel(rowX1+1,columnX1+3,this);
+    double dataX1[rowX1][columnX1];
+    //read data
+    QStringList codeList;
+    QStringList yearList;
+    QStringList quarterList;
+    codeList<<"编号";
+    codeList<<"年份";
+    codeList<<"季度";
+    for (int row = 0; row < rowX1; ++row) {
+        {
+            for (int column = 0; column < columnX1; ++column) {
+                QString code3 = modelIndex->record (column).value ("code3").toString ();
+                if(row==0)
+                {
+                    QString codeName = modelIndex->record (column).value ("name").toString ();
+                    codeList <<codeName;
+                }
+                double tmp = model->record (row).value (code3).toString ().toDouble ();
+                dataX1[row][column] = tmp;
+            }
+            QString year = model->record (row).value ("year").toString ();
+            QString quarter = model->record (row).value ("quarter").toString ();
+            yearList <<year;
+            quarterList <<quarter;
+        }
+
+    }
+
+
+    for (int i = 0; i < (columnX1+3); ++i) {
+        QStandModel->setHeaderData (i,Qt::Horizontal,codeList[i]);
+    }
+
+    //write data
+
+    QStandardItem *item;
+    //    item =new QStandardItem("id");
+    //    QStandModel->setItem (0,0,item);
+
+    //    item=new QStandardItem("year");
+    //    QStandModel->setItem (0,1,item);
+
+    //    item=new QStandardItem("quarter");
+    //    QStandModel->setItem (0,2,item);
+    //    for (int column = 3; column < columnX1+3; ++column) {
+    //            item = new QStandardItem(codeList[column-3]);
+    //            QStandModel->setItem (0,column,item);
+    //    }
+
+    for (int row = 0; row < rowX1; ++row)
+    {
+        item =new QStandardItem(QString::number (row,10));
+        QStandModel->setItem (row,0,item);
+
+        item =new QStandardItem(yearList[row]);
+        QStandModel->setItem (row,1,item);
+        item =new QStandardItem(quarterList[row]);
+        QStandModel->setItem (row,2,item);
+        for (int column = 3; column < (columnX1+3); ++column)
+        {
+            item =new QStandardItem(QString::number (dataX1[row][column-3]));
+            QStandModel->setItem (row,column,item);
+        }
+
+    }
+}
+
+////todo
+///
+///
+//void MainWindow::setFilter ()
+//{
+//    year = this->year_comboBox->currentText ();
+//    quarter= this->quarter_comboBox->currentText ();
+
+//    itemFilter ="";
+//    if(year!="全部")
+//    {
+//        itemFilter += "year ='";
+//        itemFilter += year;
+//        itemFilter += "'";
+
+//    }
+
+//    if(quarter!="全部")
+//    {
+//        if(year!="全部")
+//            itemFilter += "and quarter ='";
+//        else
+//            itemFilter += "quarter ='";
+//        itemFilter += quarter;
+//        itemFilter += "'";
+//    }
+//    model->setFilter (itemFilter);
+//}
+
+void MainWindow::changeEvent(QEvent *e)
+{
+    QMainWindow::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::on_quit_pushButton_clicked()
+{
+    this->close ();
+}
+
+
+
+void MainWindow::getIndex(int index)
+{
+
+    switch (index) {
+    case 1:
+    {
+        modelTemp = modelX1;
+        break;
+    }
+    case 2:
+    {
+        modelTemp = modelX2;
+        break;
+    }
+    case 3:
+    {
+        modelTemp = modelX3;
+        break;
+    }
+    case 4:
+    {
+        modelTemp = modelX4;
+        break;
+    }
+    case 5:
+    {
+        //tableName = "data_x500";
+        //all_tableView->setModel ( modelX5);
+        modelTemp = modelX5;
+        break;
+    }
+    case 6:
+    {
+        //tableName = "data_x600";
+        //all_tableView->setModel (modelX6);
+        modelTemp = modelX6;
+        break;
+    }
+    case 7:
+    {
+        //tableName = "data_x700";
+        //all_tableView->setModel (modelX7);
+        modelTemp = modelX7;
+        break;
+    }
+    case 0:
+    {
+        //all_tableView->setModel (modelAll);
+        modelTemp = modelAll;
+        break;
+    }}
+
+}
+
+void MainWindow::find_result ()
+{
+    int index = tabWidget->currentIndex ();
+    getIndex (index);
+
+    year = this->year_comboBox->currentText ();
+    quarter= this->quarter_comboBox->currentText ();
+
+    itemFilter ="";
+    if(year!="全部")
+    {
+        itemFilter += "year ='";
+        itemFilter += year;
+        itemFilter += "'";
+
+    }
+
+    if(quarter!="全部")
+    {
+        if(year!="全部")
+            itemFilter += "and quarter ='";
+        else
+            itemFilter += "quarter ='";
+        itemFilter += quarter;
+        itemFilter += "'";
+    }
+    else
+        all_tableView->setModel (modelTemp);
+
+    setValue ();
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    getIndex (index);
+    all_tableView->setModel (modelTemp);
+    setValue ();
+}
+
+void MainWindow::on_year_comboBox_currentTextChanged()
+{
+    this->find_result ();
+}
+
+void MainWindow::on_quarter_comboBox_currentTextChanged()
+{
+    this->find_result ();
+}
+
+
+void MainWindow::on_all_tableView_clicked()
+{
+
+    this->setValue ();
+}
+
+void MainWindow::setValue ()
+{
+    int rowNum=-1;
+
+    rowNum = all_tableView->currentIndex ().row ();
+    if(rowNum>-1)
+    {
+        all_tableView->setGeometry (30,130,631,511);
+        index_lineEdit->show ();
+        year_lineEdit->show ();
+        explain_textEdit->show ();
+        index_progressBar->show ();
+        graphicsView->show ();
+
+
+        double doubleIndex=0;
+        int index = tabWidget->currentIndex ();
+        getIndex(index);
+
+        QString time = modelTemp->item (rowNum,1)->text ();
+        time += "年 第";
+        time += modelTemp->item (rowNum,2)->text ();
+        time += "季度";
+        year_lineEdit->setText (time);
+
+        ///compute index
+        ///
+        if(index!=0)//compute sub index
+        {
+
+            doubleIndex = computeIndexStandard (rowNum, modelTemp);
+        }
+        else// compute main index
+        {
+            doubleIndex =  computeIndexAllStandard (rowNum);
+        }
+
+        int intIndex = int(doubleIndex);
+        this->index_progressBar->setValue (intIndex);
+
+        QString explain = indexName;
+
+        indexName = QString::number (doubleIndex);
+
+        explain =  getInfo(doubleIndex);
+
+        this->index_lineEdit->setText (indexName);
+        this->explain_textEdit->setText (explain);
+    }
+    else
+    {
+        all_tableView->setGeometry (30,130,921,511);
+        index_lineEdit->hide ();
+        year_lineEdit->hide ();
+        explain_textEdit->hide ();
+        index_progressBar->hide ();
+        graphicsView->hide ();
+
+
+    }
+
+}
+
+double MainWindow::computeIndexStandard(int rowNum, QStandardItemModel *standardModel)
+{
+    int rowC =  standardModel->rowCount ();//queryModel->rowCount ();
+    int columnC = standardModel->columnCount ();//queryModel->columnCount ();
+
+    kjAnalytics = new DynamicArray;
+    kjAnalytics->CodeX = columnC-3;
+    kjAnalytics->Quarter = rowC;
+
+    kjAnalytics->DynamicArrayInit (kjAnalytics->Quarter, kjAnalytics->CodeX);
+
+    for (int i = 0; i < rowC; ++i) {
+        QList <double> *x = new QList <double>;
+        for (int j = 1; j < columnC; ++j) {
+            x->push_back (standardModel->item (i,j)->text ().toDouble ());//(queryModel->record (i).value (j).toDouble ());
+        }
+        kjAnalytics->DynamicArrayAdd (x, i);
+        delete(x);
+    }
+//    kjAnalytics->printArray ();
+    kjAnalytics->KjStandarize ();
+    int r = kjAnalytics->KjIndex (rowNum);
+    return r;
+}
+
+
+double MainWindow::computeIndexAllStandard(int rowNum)
+{
+
+    int rowC = modelAll->rowCount();
+
+    kjAnalytics = new DynamicArray;
+
+    kjAnalytics->Quarter = rowC;
+    kjAnalytics->CodeX = 7;
+
+    kjAnalytics->DynamicArrayInit (kjAnalytics->Quarter,kjAnalytics->CodeX);
+
+
+    DynamicArray kjAna;
+
+    //x100
+ //   rowC = modelX1->rowCount();
+    QList <double> *x = new QList <double>;
+    for (int i = 0; i < rowC; ++i) {
+        x-> push_back (computeIndexStandard (i,modelX1));
+    }
+    kjAnalytics->DynamicArrayAdd2 (x, 0);
+    delete(x);
+
+    //x200
+//    rowC = modelX2->rowCount ();
+    x = new QList <double>;
+    for (int i = 0; i < rowC; ++i) {
+        x-> push_back (computeIndexStandard (i,modelX2));
+    }
+    kjAnalytics->DynamicArrayAdd2 (x, 1);
+    delete(x);
+
+    //x300
+//    rowC = modelX3->rowCount ();
+    x = new QList <double>;
+    for (int i = 0; i < rowC; ++i) {
+        x-> push_back (computeIndexStandard (i,modelX3));
+    }
+    kjAnalytics->DynamicArrayAdd2 (x, 2);
+    delete(x);
+
+    //x400
+ //   rowC = modelX4->rowCount ();
+    x = new QList <double>;
+    for (int i = 0; i < rowC; ++i) {
+        x-> push_back (computeIndexStandard (i,modelX4));
+    }
+    kjAnalytics->DynamicArrayAdd2 (x, 3);
+    delete(x);
+
+    //x500
+ //   rowC = modelX5->rowCount ();
+    x = new QList <double>;
+    for (int i = 0; i < rowC; ++i) {
+        x-> push_back (computeIndexStandard (i,modelX5));
+    }
+    kjAnalytics->DynamicArrayAdd2 (x, 4);
+    delete(x);
+
+    //x600
+//    rowC = modelX6->rowCount ();
+
+    x = new QList <double>;
+    for (int i = 0; i < rowC; ++i) {
+        x-> push_back (computeIndexStandard (i,modelX6));
+    }
+    kjAnalytics->DynamicArrayAdd2 (x, 5);
+    delete(x);
+
+    //x700
+ //   rowC = modelX7->rowCount ();
+    x = new QList <double>;
+    for (int i = 0; i < rowC; ++i) {
+        x-> push_back (computeIndexStandard (i,modelX7));
+    }
+    kjAnalytics->DynamicArrayAdd2 (x, 6);
+    delete(x);
+
+    kjAnalytics->printArray ();
+    kjAnalytics->KjStandarize ();
+    return kjAnalytics->KjIndexAll (rowNum);
+}
+
+void MainWindow::getIndex ()
+{
+    int iName = this->tabWidget->currentIndex ();
+
+    // iName =2;
+    switch (iName) {
+    case 1:
+        indexName = "主导企业运营指数:";
+        //queryModel->setQuery ("select * from data_x100");
+        break;
+    case 2:
+        indexName = "周边影响力指数:";
+        // queryModel->setQuery ("select * from data_x200");
+        break;
+    case 3:
+        indexName = "业态丰裕指数:";
+        // queryModel->setQuery ("select * from data_x300");
+        break;
+    case 4:
+        indexName = "海内外人气指数:";
+        // queryModel->setQuery ("select * from data_x400");
+        break;
+    case 5:
+        indexName = "人文和谐指数:";
+        //  queryModel->setQuery ("select * from data_x500");
+        break;
+    case 6:
+        indexName = "景区支撑力指数:";
+        //  queryModel->setQuery ("select * from data_x600");
+        break;
+    case 7:
+        indexName = "调整指数:";
+        //   queryModel->setQuery ("select * from data_x700");
+        break;
+    default:
+        //   queryModel->setQuery ("select * from data_all");
+        indexName = "总成指数:";
+        break;
+    };
+}
+
+void MainWindow::on_oneResult_pushButton_clicked()
+{
+
+    int index = tabWidget->currentIndex ();
+
+    getIndex(index);
+
+    int rowC = modelTemp->rowCount ();
+    int columnC = modelTemp->columnCount ();
+
+    modelST = new QStandardItemModel(rowC, 3, this);
+
+
+    modelST->setHeaderData(0, Qt::Horizontal, tr("年份季度"));
+    modelST->setHeaderData(1, Qt::Horizontal, tr("总成指数"));
+    modelST->setHeaderData(2, Qt::Horizontal, tr("指数说明"));
+
+
+    DynamicArray kjAnalytics;
+
+    kjAnalytics.CodeX = columnC-2;
+    kjAnalytics.Quarter = rowC;
+
+    kjAnalytics.DynamicArrayInit (kjAnalytics.Quarter, kjAnalytics.CodeX);
+
+    QStringList times;
+    QStringList indexs;
+    QStringList explains;
+
+
+
+    for (int i = 0; i < rowC; ++i) {
+        times << (modelTemp->item (i,0)->text ()+"年"+ modelTemp->item (i,1)->text ()+ "季度");
+    }
+    double dIndex =0;
+    for (int i = 0; i < rowC; ++i) {
+        if(index==0)
+            dIndex = computeIndexAllStandard (i);
+        else
+            dIndex = computeIndexStandard (i, modelTemp);
+        indexs << QString::number (dIndex);
+        explains << getInfo(dIndex);
+    }
+
+
+    for (int row = 0; row < rowC; ++row) {
+        QStandardItem  *item = new QStandardItem(times[row]);
+        modelST ->setItem(row, 0, item);
+        item = new QStandardItem(indexs[row]);
+        modelST->setItem(row, 1, item);
+        item = new QStandardItem(explains[row]);
+        modelST->setItem(row, 2, item);
+    }
+    this->all_tableView->setModel (modelST);
+}
+
+QString MainWindow::getInfo(double dIndex)
+{
+    QString explains ="";
+    if(dIndex > 99.73)
+    {
+        explains = "指数低于最高警戒线99.73,需要警惕!";
+    }
+    else if(dIndex >95.47)
+    {
+        explains = "指数高于较高警戒线95.47,需要关注";
+    }
+    else if(dIndex <68.27)
+    {
+        explains = "指数低于最低警戒线68.27,需要警惕!";
+    }
+    else
+    {
+        explains = "指数在正常范围之内.";
+    }
+    return explains;
+}
+
+void MainWindow::on_dataDump_pushButton_clicked()
+{
+    this->on_oneResult_pushButton_clicked ();
+
+    QString path = QFileDialog::getExistingDirectory(this, tr("Open Directory"),"/home",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    if( path !="")
+    {
+        QString fileName = path + "/index.xlsx";
+
+        QXlsx::Document *xlsx = new QXlsx::Document(fileName);
+
+
+        int rowC = (modelST->rowCount ());
+        int columnC = (modelST->columnCount ());
+
+        xlsx->write (1,1, "年份季度");
+        xlsx->write (1,2, "计算所得指标");
+        xlsx->write (1,3, "指标说明");
+
+        for (int i = 0; i < rowC; ++i) {
+            for (int j = 0; j < columnC; ++j) {
+                xlsx->write ((i+2),(j+1), modelST->item (i, j)->text ());
+            }
+        }
+
+        if (!fileName.isEmpty()) {
+            if(xlsx->save())
+                QMessageBox::warning (this,"Correct","数据导出成功");
+            else
+                QMessageBox::warning (this,"Error","数据导出失败");
+        }
+    }
+}
+

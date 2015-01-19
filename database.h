@@ -1,10 +1,13 @@
-#ifndef DATABASE_H
+﻿#ifndef DATABASE_H
 #define DATABASE_H
 
-class DataBase
-{
-public:
-    DataBase();
-};
+#include <QApplication>
+#include <QMessageBox>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QFileInfo>
 
+bool Init();
+bool ConnectDB(QString dbName);
 #endif // DATABASE_H
