@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DataTrans</class>
+ <widget class="QDialog" name="DataTrans">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QTableView" name="data_tableView">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>511</width>
+     <height>401</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>470</y>
+     <width>691</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>20</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="modify_pushButton">
+      <property name="text">
+       <string>修改</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="add_pushButton">
+      <property name="text">
+       <string>删除</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="delete_pushButton">
+      <property name="text">
+       <string>增加</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QPushButton" name="search_pushButton">
+      <property name="text">
+       <string>查找</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="importExcel_pushButton">
+      <property name="text">
+       <string>导入Excel文件</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QPushButton" name="quit_pushButton">
+      <property name="text">
+       <string>退出</string>
+      </property>
+      <property name="icon">
+       <iconset resource="kj.qrc">
+        <normaloff>:/qrc/image/qrc/image/exit_icon.png</normaloff>:/qrc/image/qrc/image/exit_icon.png</iconset>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>50</y>
+     <width>171</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="year_label">
+      <property name="text">
+       <string>年份</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="year_lineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="quarter_label">
+      <property name="text">
+       <string>季度</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="quarter_lineEdit"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="codex_label">
+      <property name="text">
+       <string>指标</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="code3_lineEdit"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="code3Value_lineEdit"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="codeValue_label">
+      <property name="text">
+       <string>指标值</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="kj.qrc"/>
+ </resources>
+ <connections/>
+</ui>
