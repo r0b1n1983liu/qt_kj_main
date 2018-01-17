@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>index_Dialog</class>
+ <widget class="QDialog" name="index_Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>指标管理</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="4" column="1" colspan="3">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="modify_pushButton">
+       <property name="text">
+        <string>修改</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/icon.png</normaloff>:/qrc/image/qrc/image/icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QPushButton" name="quit_pushButton">
+       <property name="text">
+        <string>退出</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/exit_icon.png</normaloff>:/qrc/image/qrc/image/exit_icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="import_pushButton">
+       <property name="text">
+        <string>导入Excel07</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/icon.png</normaloff>:/qrc/image/qrc/image/icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="export_pushButton">
+       <property name="text">
+        <string>导出Excel07</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/icon.png</normaloff>:/qrc/image/qrc/image/icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="delAll_pushButton">
+       <property name="text">
+        <string>全部删除</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/delete_icon.png</normaloff>:/qrc/image/qrc/image/delete_icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="3">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="search_pushButton">
+       <property name="text">
+        <string>查询</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/find.png</normaloff>:/qrc/image/qrc/image/find.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="clear_pushButton">
+       <property name="text">
+        <string>清空</string>
+       </property>
+       <property name="icon">
+        <iconset resource="kj.qrc">
+         <normaloff>:/qrc/image/qrc/image/data_icon.png</normaloff>:/qrc/image/qrc/image/data_icon.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="3">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="code2_lineEdit"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="code3_lineEdit"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="name_label">
+       <property name="text">
+        <string>指标名称</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="code3_label">
+       <property name="text">
+        <string>指标编号</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="name_lineEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="code2_label">
+       <property name="text">
+        <string>二级编号</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="3">
+    <widget class="QTextEdit" name="info_textEdit">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>400</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QLabel" name="info_label">
+     <property name="text">
+      <string>说明:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="4">
+    <widget class="QTreeView" name="index_treeView"/>
+   </item>
+   <item row="2" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="4">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>name_lineEdit</tabstop>
+  <tabstop>code3_lineEdit</tabstop>
+  <tabstop>code2_lineEdit</tabstop>
+  <tabstop>info_textEdit</tabstop>
+  <tabstop>modify_pushButton</tabstop>
+  <tabstop>quit_pushButton</tabstop>
+  <tabstop>index_treeView</tabstop>
+ </tabstops>
+ <resources>
+  <include location="kj.qrc"/>
+ </resources>
+ <connections/>
+</ui>
